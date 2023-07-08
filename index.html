@@ -65,6 +65,7 @@
         border-radius: 6px;
     }
 
+
     @media (max-width: 992px) {
         .container {
             padding: 10px;
@@ -104,7 +105,7 @@
                 </div>
             </div>
             <div class="col-lg-6 mt-5">
-                <form>
+                <form id="form" action="#" onsubmit="addUser(event)">
                     <h2 class="text-center">Sign into new account</h2>
                     <div class="mb-3">
                         <label for="name" class="form-label mb-0">Name</label>
@@ -122,10 +123,44 @@
                         <button type="submit" class="btn btn-primary btn1" value="Submit">Sign Up</button>
                     </div>
                     <p>Already have an account? <a href="#">Login here</a></p>
+                    <div id="error-container"></div>
                 </form>
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script>
+        async function addUser(event) {
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const userDetails = {
+                name: name,
+                email: email,
+                password: password
+            }
+            document.getElementById('name').value = "";
+            document.getElementById('email').value = "";
+            document.getElementById('password').value = "";
+
+            try {
+                const response = await axios
+                    .post('http://localhost:3000/user/add-user', userDetails);
+            }
+            catch (err) {
+                if (err.response) {
+                    const errorMessage = err.response.data.error;
+                    const errorContainer = document.getElementById('error-container');
+                    errorContainer.innerHTML = `<h4>${errorMessage}</h4>`;
+                }
+                else {
+                    console.log(err);
+                }
+            }
+        }
+    </script>
 </body>
 
 </html>
