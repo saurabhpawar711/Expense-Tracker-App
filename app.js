@@ -12,9 +12,9 @@ app.use(cors());
 
 app.use(bodyParser.json({ extended: false }));
 
-const mainRoute = require('./routes/router');
+const route = require('./routes/router');
 
-app.use(mainRoute);
+app.use(route);
 
 sequelize.sync()
 .then(result => {

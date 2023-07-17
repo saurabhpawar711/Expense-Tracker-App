@@ -29,7 +29,7 @@
         background: #f1ececc0;
         padding: 20px;
         border-radius: 8px;
-        width: 900px;
+        width: 800px;
     }
 
     .container-title {
@@ -63,11 +63,17 @@
     }
 
     .btn1 {
-        width: 100%;
+        width: 30%; 
+        border-radius: 50px;
         background: #000;
         color: white;
         font-weight: bold;
-        border-radius: 6px;
+    }
+
+    .centerBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .text-danger {
@@ -116,15 +122,13 @@
             <div class="col-lg-6 mt-5">
                 <form id="form" action="#" onsubmit="login(event)">
                     <h2 class="text-center">Log into your account</h2>
-                    <div class="mb-3 mt-5">
-                        <label for="email" class="form-label mb-0">Mail ID</label>
-                        <input type="email" class="form-control" id="email" required>
+                    <div class="mb-4 mt-5">
+                        <input type="email" class="form-control" id="email" placeholder="Email" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="Password" class="form-label mb-0">Password</label>
-                        <input type="password" class="form-control" id="password" required>
+                    <div class="mb-4">                       
+                        <input type="password" class="form-control" id="password" placeholder="Password" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-4 centerBtn">
                         <button type="submit" class="btn btn-primary btn1" value="Submit">Login</button>
                     </div>
                     <p>New user? <a href="signUp.html">Register here</a></p>
@@ -153,6 +157,7 @@
                 const response = await axios.post('http://localhost:3000/user/login', userDetails);
                 if (response.status === 202) {
                     alert(response.data.message);
+                    window.location.href = response.data.redirect;
                 } else {
                     const errorMessage = response.data.message;
                     const errorContainer = document.getElementById('error-container');

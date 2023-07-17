@@ -29,7 +29,7 @@
         background: #f1ececc0;
         padding: 20px;
         border-radius: 8px;
-        width: 900px;
+        width: 800px;
     }
 
     .container-title {
@@ -63,11 +63,17 @@
     }
 
     .btn1 {
-        width: 100%;
+        width: 30%; 
+        border-radius: 50px;
         background: #000;
         color: white;
         font-weight: bold;
-        border-radius: 6px;
+    }
+
+    .centerBtn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     @media (max-width: 992px) {
@@ -109,22 +115,19 @@
                         class="img-fluid d-none d-lg-block" alt="">
                 </div>
             </div>
-            <div class="col-lg-6 mt-4">
+            <div class="col-lg-6 mt-5">
                 <form id="form" action="#" onsubmit="signUp(event)">
                     <h2 class="text-center mb-4">Sign into new account</h2>
-                    <div class="mb-3">
-                        <label for="name" class="form-label mb-0">Name</label>
-                        <input type="text" class="form-control" id="name" required>
+                    <div class="mb-4">
+                        <input type="text" class="form-control" id="name" placeholder="Name" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label mb-0">Mail ID</label>
-                        <input type="email" class="form-control" id="email" required>
+                    <div class="mb-4">
+                        <input type="email" class="form-control" id="email" placeholder="Email" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="Password" class="form-label mb-0">Password</label>
-                        <input type="password" class="form-control" id="password" required>
+                    <div class="mb-4">
+                        <input type="password" class="form-control" id="password" placeholder="Password" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-4 centerBtn">
                         <button type="submit" class="btn btn-primary btn1" value="Submit">Sign Up</button>
                     </div>
                     <p>Already have an account? <a href="login.html">Login here</a>
