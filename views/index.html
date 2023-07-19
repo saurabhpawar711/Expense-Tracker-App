@@ -127,11 +127,12 @@
     padding: 5px;
     margin: 3px;
     border-radius: 7px;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
   }
 
   .delbtn:hover {
     background: #ee4141;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 
   .editbtn {
@@ -284,8 +285,10 @@
       };
 
       try {
-        const response = await axios.post('http://localhost:3000/expense/add-expenses', details);
+        const token = localStorage.getItem('token');
+        const response = await axios.post('http://localhost:3000/expense/add-expenses', details, {headers: {"Authentication": token}});
         showExpense(response.data.expenseDetails);
+
       } catch (err) {
         console.log(err);
         document.body.innerHTML += '<h4>Something went wrong</h4>';
@@ -294,7 +297,8 @@
 
     window.addEventListener('DOMContentLoaded', async () => {
       try {
-        const response = await axios.get('http://localhost:3000/expense/get-expenses');
+        const token = localStorage.getItem('token')
+        const response = await axios.get('http://localhost:3000/expense/get-expenses', {headers: {"Authentication": token}});
         for (let i = 0; i < response.data.gotDetails.length; i++) {
           showExpense(response.data.gotDetails[i]);
         }
@@ -346,8 +350,9 @@
 
       async function deleteExpense(id) {
         try {
+          const token = localStorage.getItem('token');
           const delExpense = await axios
-            .delete(`http://localhost:3000/expense/delete-expenses/${id}`)
+            .delete(`http://localhost:3000/expense/delete-expenses/${id}`, {headers: {"Authentication": token}})
           removeExpenseFromScreen(delExpense);
         }
         catch (err) {

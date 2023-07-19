@@ -2,16 +2,20 @@ const express = require('express');
 
 const router = express.Router();
 
-const mainRoute = require('../controller/main');
+const userRoute = require('../controller/user');
 
-router.post('/user/signup', mainRoute.signUp);
+const expenseRoute = require('../controller/expense');
 
-router.post('/user/login', mainRoute.login);
+const middlewareRoute = require('../middleware/authenticate');
 
-router.post('/expense/add-expenses', mainRoute.addExpense);
+router.post('/user/signup', userRoute.signUp);
 
-router.get('/expense/get-expenses', mainRoute.getExpense);
+router.post('/user/login', userRoute.login);
 
-router.delete('/expense/delete-expenses/:id', mainRoute.deleteExpense);
+router.post('/expense/add-expenses', middlewareRoute.authenticateUser, expenseRoute.addExpense);
+
+router.get('/expense/get-expenses', middlewareRoute.authenticateUser, expenseRoute.getExpense);
+
+router.delete('/expense/delete-expenses/:id', middlewareRoute.authenticateUser, expenseRoute.deleteExpense);
 
 module.exports = router;

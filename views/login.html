@@ -157,7 +157,8 @@
                 const response = await axios.post('http://localhost:3000/user/login', userDetails);
                 if (response.status === 202) {
                     alert(response.data.message);
-                    window.location.href = response.data.redirect;
+                    localStorage.setItem('token', response.data.token);
+                    window.location.href = '../views/index.html'
                 } else {
                     const errorMessage = response.data.message;
                     const errorContainer = document.getElementById('error-container');
