@@ -35,6 +35,18 @@ nav {
     color: rgb(255, 255, 255);
 }
 
+.navbar-collapse.show .navbar-nav {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-collapse .navbar-nav {
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -55,8 +67,8 @@ nav {
 
 
 .table-heading {
-    background: #192650;
-    color: aliceblue;
+    /* background: #192650; */
+    color: rgb(0, 0, 0);
 }
 
 .table {
@@ -159,11 +171,19 @@ nav {
     float: right;
     padding: 5px;
     cursor: pointer;
-    display: none;
 }
 
 .premiumBtn:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.premiumUser {
+    color: aliceblue;
+    background: #e7910e;
+    margin: 6px;
+    padding: 6px;
+    border-radius: 7px;
+    display: none;
 }
 
 @media (max-width: 576px) {

@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="col-lg-6 mt-5">
-                <form id="form" action="#" onsubmit="signUp(event)">
+                <form id="form" method="post">
                     <h2 class="text-center mb-4">Sign into new account</h2>
                     <div class="mb-4">
                         <input type="text" class="form-control" id="name" placeholder="Name" required>
@@ -33,7 +33,7 @@
                         <input type="password" class="form-control" id="password" placeholder="Password" required>
                     </div>
                     <div class="mb-4 centerBtn">
-                        <button type="submit" class="btn btn-primary btn1" value="Submit">Sign Up</button>
+                        <button type="submit" class="signupbtn1 btn btn-primary" id="signupbtn" value="Submit">Sign Up</button>
                     </div>
                     <p>Already have an account? <a href="login.html">Login here</a>
                     </p>
@@ -43,7 +43,7 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
-    <script src="/views/js/signUp.js"></script>
+    <script src="../js/signUp.js"></script>
 </body>
 
 </html>

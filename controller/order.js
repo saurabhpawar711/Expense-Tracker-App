@@ -40,9 +40,11 @@ exports.updateStatus = async (req, res, next) => {
                 await Order.update({ status: status }, { where: { orderId: order_id } });
             }
             else if (status === "SUCCESSFUL") {
-                await Order.update({ paymentId: payment_id, status: status }, { where: { orderId: order_id } });
-                await req.user.update({ isPremiumUser: true });
-                return res.status(202).json({ message: "Payment Successful", success: true});
+                const promise1 = Order.update({ paymentId: payment_id, status: status }, { where: { orderId: order_id } });
+                const promise2 = req.user.update({ isPremiumUser: true });
+
+                Promise.all([promise1, promise2])
+                return await res.status(202).json({ message: "Payment Successful", success: true});
             }
         }
     }
@@ -59,6 +61,6 @@ exports.premiumStatus = async (req, res, next) => {
     }
     catch(err) {
         console.log(err);
-        res.status(500).json({ error: err });
+        return res.status(500).json({ error: err });
     }
 }

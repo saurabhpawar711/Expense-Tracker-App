@@ -4,12 +4,12 @@ const router = express.Router();
 
 const orderRoute = require('../controller/order');
 
-const middlewareRoute = require('../middleware/authenticate');
+const authenticateRoute = require('../middleware/authenticate');
 
-router.get('/premium/buy-premium', middlewareRoute.authenticateUser, orderRoute.buyPremium);
+router.get('/premium/buy-premium', authenticateRoute.authenticateUser, orderRoute.buyPremium);
 
-router.post('/premium/update-status', middlewareRoute.authenticateUser, orderRoute.updateStatus);
+router.post('/premium/update-status', authenticateRoute.authenticateUser, orderRoute.updateStatus);
 
-router.get('/premium/premium-status', middlewareRoute.authenticateUser, orderRoute.premiumStatus);
+router.get('/premium/premium-status', authenticateRoute.authenticateUser, orderRoute.premiumStatus);
 
 module.exports = router;

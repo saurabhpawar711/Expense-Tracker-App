@@ -1,11 +1,15 @@
-async function signUp(event) {
+const signUp = document.getElementById('signupbtn');
 
-    const name = document.getElementById('name').value;
+signUp.addEventListener('click', signUpfunction);
+
+async function signUpfunction() {
+
+    const username = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
     const userDetails = {
-        name: name,
+        name: username,
         email: email,
         password: password
     }
@@ -15,13 +19,14 @@ async function signUp(event) {
 
     try {
         const response = await axios
-            .post('http://localhost:3000/user/signup', userDetails);
-            if(response.data.success) {
-                alert('You have successfully created account');
-                window.location.href = '../views/login.html';
-            }
+            .post('http://localhost:4000/user/signup', userDetails);
+        if (response.status === 201) {
+            alert('You have successfully created account');
+            window.location.href = '../html/login.html';
+        }
     }
     catch (err) {
+        console.log(err);
         if (err.response) {
             const errorMessage = err.response.data.error;
             const errorContainer = document.getElementById('error-container');

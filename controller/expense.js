@@ -7,7 +7,7 @@ exports.addExpense = async (req, res, next) => {
         const amount = req.body.amount;
         const description = req.body.description;
         const category = req.body.category;
-        const userId = req.user.id
+        const userId = req.user.id;
 
         const data = await Expense.create({ date: date, amount: amount, description: description, category: category, userId: userId })
         res.status(201).json({ expenseDetails: data });
@@ -38,3 +38,4 @@ exports.deleteExpense = async (req, res, next) => {
         console.log(err);
     }
 }
+
