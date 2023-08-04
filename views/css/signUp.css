@@ -7,6 +7,7 @@ input[type='text'],
 input[type='email'],
 input[type='password'] {
     width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .container {
@@ -51,10 +52,9 @@ input[type='password'] {
     height: auto;
 }
 
-.btn1 {
+.signupbtn1 {
     width: 30%; 
     border-radius: 50px;
-    background: #000;
     color: white;
     font-weight: bold;
 }
@@ -65,6 +65,10 @@ input[type='password'] {
     justify-content: center;
 }
 
+.loginhere {
+    text-decoration: none;
+    color: rgb(4, 108, 235);
+}
 @media (max-width: 992px) {
     .container {
         padding: 10px;

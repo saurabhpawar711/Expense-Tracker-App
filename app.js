@@ -22,11 +22,13 @@ const userRoute = require('./routes/user');
 const expenseRoute = require('./routes/expense');
 const orderRoute = require('./routes/order');
 const premiumRoute = require('./routes/premiumRoute');
+const passwordRoute = require('./routes/resetPassword');
 
 app.use(userRoute);
 app.use(expenseRoute);
 app.use(orderRoute);
 app.use(premiumRoute);
+app.use(passwordRoute);
 
 User.hasMany(Expenses);
 Expenses.belongsTo(User);

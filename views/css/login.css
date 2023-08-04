@@ -7,6 +7,7 @@ input[type='text'],
 input[type='email'],
 input[type='password'] {
     width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .container {
@@ -54,9 +55,13 @@ input[type='password'] {
 .btn1 {
     width: 30%;
     border-radius: 50px;
-    background: #000;
     color: white;
     font-weight: bold;
+}
+
+.forgotPwd {
+    text-decoration: none;
+    color: rgb(4, 108, 235);
 }
 
 .centerBtn {
@@ -70,6 +75,22 @@ input[type='password'] {
     font-size: 16px;
     margin-top: 10px;
 }
+
+
+.forgotPwd:hover {
+    color: #0056b3;
+}
+
+.signuphere {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.signuphere:hover {
+    color: #0056b3;
+}
+
 
 @media (max-width: 992px) {
     .container {
