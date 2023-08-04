@@ -1,8 +1,10 @@
 const Razorpay = require('razorpay');
 const Order = require('../models/orders');
 const User = require('../models/user');
+const sequelize = require('../util/database');
 
 exports.buyPremium = async (req, res, next) => {
+    const t = await sequelize.transaction();
     try {
         var rzp = new Razorpay({
             key_id: process.env.RAZORPAY_KEY_ID,
@@ -15,8 +17,9 @@ exports.buyPremium = async (req, res, next) => {
                 throw new Error(err);
             }
             req.user
-                .createOrder({ orderId: order.id, status: 'PENDING' })
+                .createOrder({ orderId: order.id, status: 'PENDING' }, {transaction: t})
                 .then(() => {
+                    t.commit();
                     return res.status(201).json({ order, key_id: rzp.key_id })
                 })
                 .catch(err => {
@@ -25,42 +28,49 @@ exports.buyPremium = async (req, res, next) => {
         })
     }
     catch (err) {
+        await t.rollback();
         console.log(err);
         res.status(403).json({ message: "Something went wrong", error: err });
     }
 }
 
 exports.updateStatus = async (req, res, next) => {
+    const t = await sequelize.transaction();
     try {
         const { payment_id, order_id, status } = req.body;
-        const order = Order.findOne({ where: { orderId: order_id } });
+        const order = Order.findOne({ where: { orderId: order_id }, transaction: t });
         if (order) {
             console.log(status);
             if (status === "FAILED") {
-                await Order.update({ status: status }, { where: { orderId: order_id } });
+                await Order.update({ status: status }, { where: { orderId: order_id }, transaction: t });
             }
             else if (status === "SUCCESSFUL") {
-                const promise1 = Order.update({ paymentId: payment_id, status: status }, { where: { orderId: order_id } });
-                const promise2 = req.user.update({ isPremiumUser: true });
+                const promise1 = Order.update({ paymentId: payment_id, status: status }, { where: { orderId: order_id }, transaction: t });
+                const promise2 = req.user.update({ isPremiumUser: true }, {transaction: t});
 
-                Promise.all([promise1, promise2])
-                return await res.status(202).json({ message: "Payment Successful", success: true});
+                await Promise.all([promise1, promise2]);
+                await t.commit();
+                return res.status(202).json({ message: "Payment Successful", success: true });
             }
         }
     }
     catch (err) {
         console.log(err);
+        await t.rollback();
         res.status(403).json({ message: "Something went wrong", error: err });
     }
 }
 
 exports.premiumStatus = async (req, res, next) => {
+    const t = await sequelize.transaction();
     try {
         const premiumUser = req.user.isPremiumUser;
-        return res.json({premiumUser});
+        await t.commit();
+        return res.json({ premiumUser });
     }
-    catch(err) {
+    catch (err) {
         console.log(err);
+        await t.rollback();
         return res.status(500).json({ error: err });
     }
 }
