@@ -104,7 +104,6 @@ async function addExpense(event) {
 
     } catch (err) {
         console.log(err);
-        document.body.innerHTML += '<h4>Something went wrong</h4>';
     }
 }
 

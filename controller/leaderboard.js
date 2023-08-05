@@ -1,6 +1,5 @@
 const User = require('../models/user');
-const sequelize = require('../util/database');
-
+const sequelize = require('../util/database')
 
 exports.showExpenses = async (req, res, next) => {
     const t = await sequelize.transaction();

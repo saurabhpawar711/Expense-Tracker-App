@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 const app = express();
 
@@ -6,11 +7,14 @@ const cors = require('cors');
 
 require('dotenv').config();
 
+app.use(express.static(path.join(__dirname, 'views', 'html')));
+
 const sequelize = require('./util/database');
 
 const User = require('./models/user');
 const Expenses = require('./models/expenses')
 const Order = require('./models/orders');
+const ResetPassword = require('./models/resetPasswordModel');
 
 const bodyParser = require('body-parser');
 
@@ -34,6 +38,7 @@ User.hasMany(Expenses);
 Expenses.belongsTo(User);
 User.hasMany(Order);
 Order.belongsTo(User);
+ResetPassword.belongsTo(User);
 
 sequelize.sync()
 .then(result => {

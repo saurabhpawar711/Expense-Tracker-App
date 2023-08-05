@@ -1,8 +1,10 @@
-const login = document.getElementById('loginbtn');
+const login = document.getElementById('form');
 
-login.addEventListener('click', loginfunction);
+login.addEventListener('submit', loginfunction);
 
-async function loginfunction() {
+async function loginfunction(event) {
+
+    event.preventDefault();
 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;

@@ -1,8 +1,10 @@
-const signUp = document.getElementById('signupbtn');
+const signUp = document.getElementById('form');
 
-signUp.addEventListener('click', signUpfunction);
+signUp.addEventListener('submit', signUpfunction);
 
-async function signUpfunction() {
+async function signUpfunction(event) {
+
+    event.preventDefault();
 
     const username = document.getElementById('name').value;
     const email = document.getElementById('email').value;

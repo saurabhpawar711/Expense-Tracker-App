@@ -17,9 +17,11 @@ async function Leaderboardfunction(event) {
     try {
         const response = await axios.get('http://localhost:4000/premium/show-leaderboard', { headers: { "Authentication": token } });
     
-            for (let i = 0; i < response.data.userLeaderboardDetails.length, response.data.userLeaderboardDetails.length; i++) {
-                showLeaderboard(response.data.userLeaderboardDetails[i], response.data.userPositionDetails[i]);
-            }
+            let position = 1;
+            response.data.userLeaderboardDetails.forEach((leaderboard) => {
+                showLeaderboard(leaderboard, position)
+                position++;
+            })
 
         function showLeaderboard(leaderboard, position) {
 
@@ -28,7 +30,7 @@ async function Leaderboardfunction(event) {
 
             const positionCol = document.createElement('td');
             positionCol.classList.add('positionCol');
-            positionCol.textContent = position.position;
+            positionCol.textContent = position;
 
             const nameCol = document.createElement('td');
             nameCol.classList.add('nameCol');
@@ -36,8 +38,8 @@ async function Leaderboardfunction(event) {
 
             const amountCol = document.createElement('td');
             amountCol.classList.add('amountCol');
-            if(leaderboard.totalAmount>0) {
-                amountCol.textContent = leaderboard.totalAmount;
+            if(leaderboard.totalExpense>0) {
+                amountCol.textContent = leaderboard.totalExpense;
             }
             else {
                 amountCol.textContent = 0;

@@ -1,21 +1,33 @@
 const Sib = require('sib-api-v3-sdk');
+const { v4: uuidv4 } = require('uuid');
+const User = require('../models/user');
+const ResetPassword = require('../models/resetPasswordModel')
+const bcrypt = require('bcrypt');
+const path = require('path');
 require('dotenv').config();
-const client = Sib.ApiClient.instance;
-
-const apiKey = client.authentications['api-key'];
-apiKey.apiKey = process.env.API_KEY;
-
-const tranEmailApi = new Sib.TransactionalEmailsApi();
 
 exports.sendEmail = async (req, res, next) => {
     try {
+        const email = req.body.email;
+        const id = uuidv4();
+
+        const findEmail = await User.findOne({ where: { email: email } });
+
+        await ResetPassword.create({ id: id, isActive: true, userId: findEmail.id });
+
+        const client = Sib.ApiClient.instance;
+        const apiKey = client.authentications['api-key'];
+        apiKey.apiKey = process.env.RESET_PASSWORD_API_KEY;
+
+        const tranEmailApi = new Sib.TransactionalEmailsApi();
+
         const sender = {
             email: 'saurabhpawar71100@gmail.com'
         };
-        
+
         const receivers = [
             {
-                email: req.body.email
+                email: email
             }
         ];
 
@@ -23,13 +35,52 @@ exports.sendEmail = async (req, res, next) => {
             sender,
             to: receivers,
             subject: 'reset your password',
-            textContent: 'you can reset your password by clicking here.'
+            htmlContent: `<h3>Expense tracker reset password</h3>
+            <h4>You can reset your password by clicking below</h4>
+            <a href="http://localhost:4000/password/checkRequest/${id}">Click here</a>`
         })
-        return res.status(200).json({message: 'reset password link sent to your email'});
+        return res.status(200).json({ message: 'reset password link sent to your email' });
 
     }
     catch (err) {
         console.log(err)
-        res.status(500).json({ message: 'Error sending email' });
+        res.status(500).json({ message: 'Error while sending email' });
+    }
+}
+
+exports.checkRequest = async (req, res, next) => {
+
+    try {
+        const uuid = req.params.uuid;
+        const isRequestActive = await ResetPassword.findOne({ where: { id: uuid, isActive: true } });
+        const userId = isRequestActive.userId;
+        if (isRequestActive) {
+            await ResetPassword.update({ isActive: false }, { where: { id: uuid } });
+            res.redirect(`http://localhost:4000/resetPassword.html?uI=${userId}&u=${uuid}`);
+        }
+        else {
+            throw new Error('Link expired');
+        }
+    }
+    catch (err) {
+        console.log(err);
+        if (err.message === 'Link expired') {
+            res.status(500).json(err.message);
+        }
+    }
+}
+
+exports.updatePassword = async (req, res, next) => {
+    try {
+        const newPassword = req.body.newPassword;
+        const userId = req.params.userId;
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+        await User.update({ password: hashedPassword }, { where: { id: userId } });
+        res.status(201).json({ message: "Yor have successfully changed your password" });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(404).json({ error: 'User not found' });
     }
 }
