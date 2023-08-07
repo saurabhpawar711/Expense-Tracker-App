@@ -1,6 +1,7 @@
 const Expense = require('../models/expenses');
 const User = require('../models/user');
 const sequelize = require('../util/database');
+const S3Services = require('../services/S3service');
 
 exports.addExpense = async (req, res, next) => {
     const t = await sequelize.transaction();
@@ -21,7 +22,7 @@ exports.addExpense = async (req, res, next) => {
     catch (err) {
         console.log(err);
         await t.rollback();
-        res.status(500).json({message: "Something went wrong"});
+        res.status(500).json({ error: "Something went wrong" });
     }
 };
 
@@ -32,6 +33,7 @@ exports.getExpense = async (req, res, next) => {
     }
     catch (err) {
         console.log(err);
+        res.status(500).json({ error: "Something went wrong" });
     }
 }
 
@@ -50,6 +52,21 @@ exports.deleteExpense = async (req, res, next) => {
     catch (err) {
         console.log(err);
         await t.rollback();
-        res.status(500).json({message: "Something went wrong"});
+        res.status(500).json({ error: "Something went wrong" });
     }
 }
+
+exports.downloadExpense = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const expenses = await Expense.findAll({ where: { userId: req.user.id } });
+        const stringifiedExpenses = JSON.stringify(expenses);
+        const fileName = `Expense${userId}/${new Date()}.txt`;
+        const fileUrl = await S3Services.uploadToS3(stringifiedExpenses, fileName);
+        res.status(200).json({ fileUrl, success: true });
+    }
+    catch (err) {
+        res.status(500).json({ success: false, error: err });
+    }
+}
+

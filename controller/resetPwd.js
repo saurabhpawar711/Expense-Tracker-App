@@ -3,7 +3,6 @@ const { v4: uuidv4 } = require('uuid');
 const User = require('../models/user');
 const ResetPassword = require('../models/resetPasswordModel')
 const bcrypt = require('bcrypt');
-const path = require('path');
 require('dotenv').config();
 
 exports.sendEmail = async (req, res, next) => {

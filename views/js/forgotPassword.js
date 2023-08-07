@@ -13,9 +13,9 @@ async function sendMail(event) {
     document.getElementById('typeEmail').value = "";
 
     try {
-            const response = await axios.post('http://localhost:4000/password/forgotpassword', mailId); 
-            alert(response.data.message);
-            window.location.href = "../html/login.html";       
+        const response = await axios.post('http://localhost:4000/password/forgotpassword', mailId);
+        alert(response.data.message);
+        window.location.href = "../html/login.html";
     }
     catch (err) {
         console.log(err);

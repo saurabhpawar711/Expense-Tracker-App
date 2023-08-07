@@ -25,14 +25,18 @@ app.use(bodyParser.json({ extended: false }));
 const userRoute = require('./routes/user');
 const expenseRoute = require('./routes/expense');
 const orderRoute = require('./routes/order');
-const premiumRoute = require('./routes/premiumRoute');
+const leaderboardRoute = require('./routes/leaderboardRoute');
 const passwordRoute = require('./routes/resetPassword');
+const reportsRoute = require('./routes/reportsRoute');
+const isPremium = require('./routes/checkIfPremium');
 
 app.use(userRoute);
 app.use(expenseRoute);
 app.use(orderRoute);
-app.use(premiumRoute);
+app.use(leaderboardRoute);
 app.use(passwordRoute);
+app.use(reportsRoute);
+app.use(isPremium);
 
 User.hasMany(Expenses);
 Expenses.belongsTo(User);

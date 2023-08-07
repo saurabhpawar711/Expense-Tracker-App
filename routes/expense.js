@@ -6,10 +6,14 @@ const expenseRoute = require('../controller/expense');
 
 const authenticateRoute = require('../middleware/authenticate');
 
+const isPremiumRoute = require('../middleware/isPremium');
+
 router.post('/expense/add-expenses', authenticateRoute.authenticateUser, expenseRoute.addExpense);
 
 router.get('/expense/get-expenses', authenticateRoute.authenticateUser, expenseRoute.getExpense);
 
 router.delete('/expense/delete-expenses/:id', authenticateRoute.authenticateUser, expenseRoute.deleteExpense);
+
+router.get('/user/download', authenticateRoute.authenticateUser, isPremiumRoute.premiumStatus, expenseRoute.downloadExpense);
 
 module.exports = router;

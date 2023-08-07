@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     const toggleBtn = document.querySelector(".navbar-toggler");
     const linksContainer = document.querySelector(".navbar-collapse");
@@ -7,9 +8,34 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+document.getElementById('downloadFile').addEventListener('click', downloadExpenseFile);
+
+async function downloadExpenseFile() {
+    try {
+        const token = localStorage.getItem('token');
+        const downloadRes = await axios.get('http://localhost:4000/user/download', { headers: { "Authorization": token } });
+        if (downloadRes.status === 200) {
+            const a = document.createElement('a');
+            a.href = downloadRes.data.fileUrl;
+            a.download = 'myexpense.csv'
+            a.click();
+        }
+        else {
+            throw new Error('Something went wrong');
+        }
+    }
+    catch (err) {
+        console.log(err);
+        const errorMessage = err.response.data.error;
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    }
+}
+
 document.getElementById('rzp-btn').addEventListener("click", async function () {
     const token = localStorage.getItem('token');
-    const response = await axios.get('http://localhost:4000/premium/buy-premium', { headers: { "Authentication": token } });
+    const response = await axios.get('http://localhost:4000/premium/buy-premium', { headers: { "Authorization": token } });
 
     var options = {
         "key": response.data.key_id,
@@ -20,13 +46,13 @@ document.getElementById('rzp-btn').addEventListener("click", async function () {
                     order_id: options.order_id,
                     payment_id: response.razorpay_payment_id,
                     status: "SUCCESSFUL"
-                }, { headers: { "Authentication": token } })
+                }, { headers: { "Authorization": token } })
                 alert('You are premium user now');
                 const premiumBtn = document.getElementById('rzp-btn');
                 const premiumUser = document.getElementById('premiumMember');
                 if (premiumBtn) {
                     premiumBtn.style.display = 'none';
-                    premiumUser.style.display = 'block'; 
+                    premiumUser.style.display = 'block';
                 }
             }
             catch (err) {
@@ -45,7 +71,7 @@ document.getElementById('rzp-btn').addEventListener("click", async function () {
         await axios.post('http://localhost:4000/premium/update-status', {
             order_id: options.order_id,
             status: "FAILED"
-        }, { headers: { "Authentication": token } })
+        }, { headers: { "Authorization": token } })
         alert('Something went wrong');
     })
 });
@@ -53,16 +79,16 @@ document.getElementById('rzp-btn').addEventListener("click", async function () {
 async function removePreBtn() {
     const token = localStorage.getItem('token');
     try {
-        const response = await axios.get('http://localhost:4000/premium/premium-status', { headers: { "Authentication": token } });
+        const response = await axios.get('http://localhost:4000/premium/premium-status', { headers: { "Authorization": token } });
         const isPremiumUser = response.data.premiumUser;
         const premiumBtn = document.getElementById('rzp-btn');
         const premiumUser = document.getElementById('premiumMember');
         if (isPremiumUser) {
-            premiumBtn.style.display = 'none'; 
-            premiumUser.style.display = 'block'; 
+            premiumBtn.style.display = 'none';
+            premiumUser.style.display = 'block';
         } else {
-            premiumBtn.style.display = 'block'; 
-            premiumUser.style.display = 'none'; 
+            premiumBtn.style.display = 'block';
+            premiumUser.style.display = 'none';
         }
     }
     catch (err) {
@@ -84,11 +110,8 @@ async function addExpense(event) {
     document.getElementById('category').value = "";
 
     const date = new Date();
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
 
-    const formattedDate = `${day}-${month}-${year}`;
+    const formattedDate = date.toLocaleDateString('en-GB');
 
     let details = {
         date: formattedDate,
@@ -99,7 +122,7 @@ async function addExpense(event) {
 
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.post('http://localhost:4000/expense/add-expenses', details, { headers: { "Authentication": token } });
+        const response = await axios.post('http://localhost:4000/expense/add-expenses', details, { headers: { "Authorization": token } });
         showExpense(response.data.expenseDetails);
 
     } catch (err) {
@@ -110,7 +133,7 @@ async function addExpense(event) {
 window.addEventListener('DOMContentLoaded', async () => {
     try {
         const token = localStorage.getItem('token')
-        const response = await axios.get('http://localhost:4000/expense/get-expenses', { headers: { "Authentication": token } });
+        const response = await axios.get('http://localhost:4000/expense/get-expenses', { headers: { "Authorization": token } });
         for (let i = 0; i < response.data.gotDetails.length; i++) {
             showExpense(response.data.gotDetails[i]);
         }
@@ -164,7 +187,7 @@ function showExpense(expense) {
         try {
             const token = localStorage.getItem('token');
             const delExpense = await axios
-                .delete(`http://localhost:4000/expense/delete-expenses/${id}`, { headers: { "Authentication": token } })
+                .delete(`http://localhost:4000/expense/delete-expenses/${id}`, { headers: { "Authorization": token } })
             removeExpenseFromScreen(delExpense);
         }
         catch (err) {
@@ -187,4 +210,46 @@ function showExpense(expense) {
     newRow.appendChild(descriptionCol);
     newRow.appendChild(deleteEditCol);
     tableBody.appendChild(newRow);
+}
+
+const leaderBoard = document.getElementById('leaderboardLink');
+const reports = document.getElementById('reportsLink');
+leaderBoard.addEventListener('click', checkPremiumforLeaderboard);
+reports.addEventListener('click', checkPremiumforReports);
+
+async function checkPremiumforLeaderboard() {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:4000/premium/check-premium', { headers: { "Authorization": token } });
+
+        if (response.data.isPremium === true) {
+            window.location.href = '../html/leaderboard.html';
+        } else {
+            alert('Premium membership required');
+        }
+    } catch (err) {
+        const errorMessage = err.response.data.error;
+        if (errorMessage) {
+            alert(errorMessage);
+            window.location.href = '../html/index.html';
+        }
+    }
+}
+async function checkPremiumforReports() {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:4000/premium/check-premium', { headers: { "Authorization": token } });
+
+        if (response.data.isPremium === true) {
+            window.location.href = '../html/reportsPage.html';
+        } else {
+            alert('Premium membership required');
+        }
+    } catch (err) {
+        const errorMessage = err.response.data.error;
+        if (errorMessage) {
+            alert(errorMessage);
+            window.location.href = '../html/index.html';
+        }
+    }
 }

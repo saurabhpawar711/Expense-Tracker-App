@@ -25,11 +25,10 @@
                         <a class="nav-link active active-link" aria-current="page" href="../html/index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/leaderboard.html" id="leaderboardLink">Leaderboard
-                            &#128081</a>
+                        <a class="nav-link" href="leaderboard.html" id="leaderboardLink">Leaderboard &#128081</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../html/reportsPage.html">Reports &#128081</a>
+                        <a class="nav-link" href="#" id="reportsLink">Reports &#128081</a>
                     </li>
                 </ul>
             </div>
@@ -42,8 +41,8 @@
             <h2>Daily Expenses</h2>
             <div class="mb-3">
                 <label for="selectedDate" class="form-label">Select Date</label>
-                <input type="date" class="form-control" id="dailyStartDate">
-                <button type="submit" class="btn btn-primary">Select</button>
+                <input type="date" class="form-control" id="selectedDate">
+                <button type="submit" class="btn btn-primary" id="dailyBtn">Select</button>
             </div>
             <table class="table">
                 <thead>
@@ -54,7 +53,7 @@
                         <th>Amount</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="dailyExpenseTable">
 
                 </tbody>
             </table>
@@ -65,7 +64,7 @@
             <div class="mb-3">
                 <label for="selectedMonth" class="form-label">Select Month</label>
                 <input type="month" class="form-control" id="selectedMonth">
-                <button type="submit" class="btn btn-primary">Select</button>
+                <button type="submit" class="btn btn-primary" id="monthlyBtn">Select</button>
             </div>
             <table class="table">
                 <thead>
@@ -76,12 +75,13 @@
                         <th>Amount</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="monthlyExpenseTable">
 
                 </tbody>
             </table>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
     <script src="../js/reportsPage.js"></script>
 
 </body>
