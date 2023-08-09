@@ -1,6 +1,5 @@
 const Razorpay = require('razorpay');
 const Order = require('../models/orders');
-const User = require('../models/user');
 const sequelize = require('../util/database');
 
 exports.buyPremium = async (req, res, next) => {
@@ -13,7 +12,6 @@ exports.buyPremium = async (req, res, next) => {
         const amount = 19900;
         rzp.orders.create({ amount, currency: 'INR' }, (err, order) => {
             if (err) {
-                console.log(err);
                 throw new Error(err);
             }
             req.user
@@ -29,7 +27,6 @@ exports.buyPremium = async (req, res, next) => {
     }
     catch (err) {
         await t.rollback();
-        console.log(err);
         res.status(403).json({ message: "Something went wrong", error: err });
     }
 }
@@ -40,7 +37,6 @@ exports.updateStatus = async (req, res, next) => {
         const { payment_id, order_id, status } = req.body;
         const order = Order.findOne({ where: { orderId: order_id }, transaction: t });
         if (order) {
-            console.log(status);
             if (status === "FAILED") {
                 await Order.update({ status: status }, { where: { orderId: order_id }, transaction: t });
             }
@@ -55,7 +51,6 @@ exports.updateStatus = async (req, res, next) => {
         }
     }
     catch (err) {
-        console.log(err);
         await t.rollback();
         res.status(403).json({ message: "Something went wrong", error: err });
     }
@@ -69,7 +64,6 @@ exports.premiumStatus = async (req, res, next) => {
         return res.json({ premiumUser });
     }
     catch (err) {
-        console.log(err);
         await t.rollback();
         return res.status(500).json({ error: err });
     }

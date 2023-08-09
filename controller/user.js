@@ -18,7 +18,6 @@ exports.signUp = async (req, res, next) => {
         
     }
     catch (err) {
-        console.log(err);
         await t.rollback();
         return res.status(400).json({ error: 'User already exists' });
     }
@@ -50,7 +49,6 @@ exports.login = async (req, res, next) => {
         }
     }
     catch (err) {
-        console.log(err);
         if (err.message === 'Invalid user') {
             await t.rollback();
             res.status(404).json({ success: false, error: err.message });

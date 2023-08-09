@@ -5,7 +5,6 @@ exports.authenticateUser = (req, res, next) => {
     try {
         const token = req.header('Authorization');
         const user = jwt.verify(token, 'secretkey');
-        console.log('userId', user.userId);
         User.findByPk(user.userId)
         .then(user => {
             req.user = user;
@@ -13,7 +12,6 @@ exports.authenticateUser = (req, res, next) => {
         })
     }
     catch (err) {
-        console.log(err);
-        return res.status(401).json({success: false});
+        return res.status(401).json({success: false, error: 'error while authenticating user'});
     }
 }

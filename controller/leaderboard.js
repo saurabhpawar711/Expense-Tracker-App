@@ -31,7 +31,6 @@ exports.getLeaderboardDetails = async (req, res) => {
     }
 
     catch (err) {
-        console.log(err);
         res.status(500).json({error: "Something went wrong during showing expenses"});
     }
 }

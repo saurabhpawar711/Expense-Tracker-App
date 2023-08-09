@@ -79,7 +79,6 @@ exports.updatePassword = async (req, res, next) => {
         res.status(201).json({ message: "Yor have successfully changed your password" });
     }
     catch (err) {
-        console.log(err);
         res.status(404).json({ error: 'User not found' });
     }
 }

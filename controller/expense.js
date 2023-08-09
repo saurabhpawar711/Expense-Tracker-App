@@ -19,7 +19,6 @@ exports.addExpense = async (req, res, next) => {
         res.status(201).json({ expenseDetails: data });
     }
     catch (err) {
-        console.log(err);
         await t.rollback();
         res.status(500).json({ error: "Something went wrong" });
     }
@@ -31,7 +30,6 @@ exports.getExpense = async (req, res, next) => {
         res.status(202).json({ gotDetails: response });
     }
     catch (err) {
-        console.log(err);
         res.status(500).json({ error: "Something went wrong" });
     }
 }
@@ -49,7 +47,6 @@ exports.deleteExpense = async (req, res, next) => {
         res.sendStatus(203);
     }
     catch (err) {
-        console.log(err);
         await t.rollback();
         res.status(500).json({ error: "Something went wrong" });
     }
@@ -73,7 +70,6 @@ exports.getExpenseDetails = async (req, res) => {
     try {
         const userId = req.user.id;
         const limit = parseInt(req.body.expensePerPage, 10);
-        console.log(limit);
         const page = req.params.page;
         const offset = (page - 1) * limit;
 
@@ -102,7 +98,6 @@ exports.getExpenseDetails = async (req, res) => {
     }
 
     catch (err) {
-        console.log(err);
         res.status(500).json({error: err});
     }
 }

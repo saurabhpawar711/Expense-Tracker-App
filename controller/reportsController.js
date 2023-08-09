@@ -7,7 +7,6 @@ exports.getDailyReports = async (req, res) => {
     try {
         const t = await sequelize.transaction();
         const date = req.body.date;
-        console.log(date);
         const userId = req.user.id;
         const data = await Expense.findAll({
             where: { date: date, userId: userId },
@@ -17,7 +16,6 @@ exports.getDailyReports = async (req, res) => {
         res.status(200).json({data: data, success: true});
     }
     catch (err) {
-        console.log(err);
         await t.rollback();
         res.status(500).json({error: err});
     }
@@ -41,7 +39,6 @@ exports.getMonthlyReports = async (req, res) => {
         res.status(200).json({data: data, success: true});
     }
     catch (err) {
-        console.log(err);
         await t.rollback();
         res.status(500).json({error: err});
     }
