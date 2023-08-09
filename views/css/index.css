@@ -91,8 +91,20 @@ nav {
     justify-content: center;
 }
 
-.form-control,
-.form-select {
+.control {
+    border-radius: 0;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    height: 35px;
+    padding: 4px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.select {
     border-radius: 0;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
@@ -100,6 +112,14 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
+    border: none;
+    padding: 4px;
+    margin: 0;
+    width: 100%;
+}
+
+select option {
+    border-radius: 10px;
 }
 
 .text-center {
@@ -125,28 +145,10 @@ nav {
     text-align: center;
 }
 
-.delbtn {
-    background: #b8cddf;
-    color: #f02525;
-    padding: 5px;
-    margin: 3px;
-    border-radius: 7px;
-    border-color: #f02525;
-
-}
-
 .delbtn:hover {
     background: #f02525;
     color: aliceblue;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.editbtn {
-    color: aliceblue;
-    padding: 5px;
-    margin: 2px;
-    border-radius: 7px;
-    border: none;
 }
 
 .editbtn:hover {
@@ -186,6 +188,73 @@ nav {
     display: none;
 }
 
+.container-items {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.itemsPerPage {
+    padding: 4px;
+    margin-left: 3px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.presentBtn {
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #007bff;
+    color: aliceblue;
+    border-radius: 4px;
+}
+
+.previousBtn,
+.nextBtn {
+    padding: 5px 10px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #007bff;
+    color: aliceblue;
+    border-radius: 4px;
+}
+
+.firstBtn,
+.lastBtn {
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    color: black;
+}
+
+.presentBtn:hover,
+.previousBtn:hover,
+.nextBtn:hover {
+    background-color: #0a74ee;
+}
+
+.presentBtn.active {
+    background-color: #192650;
+    color: #fff;
+    margin: 5px;
+}
+
+
 @media (max-width: 576px) {
     .container {
         padding: 10px;
@@ -199,5 +268,31 @@ nav {
         text-align: left;
         padding-top: 5px;
     }
+}
 
+@media (max-width: 991px) {
+    .navbar-collapse.show {
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #192650;
+        text-align: center;
+        padding: 1rem 0;
+        z-index: 9999;
+    }
+
+    .navbar-nav {
+        display: inline-block;
+    }
+
+    .navbar-nav .nav-item {
+        margin: 0 0.5rem;
+    }
+
+    .premiumUser,
+    .removePreButton,
+    .logout {
+        display: block;
+        margin-top: 1rem;
+    }
 }

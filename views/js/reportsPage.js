@@ -7,6 +7,36 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+const dailyToggle = document.getElementById('dailyToggle');
+const monthlyToggle = document.getElementById('monthlyToggle');
+const dailyContainer = document.getElementById('dailyContainer');
+const monthlyContainer = document.getElementById('monthlyContainer');
+const reportContainer = document.getElementById('reportContainer');
+const tableBody = document.getElementById('expenseTable');
+reportContainer.style.display = 'none';
+
+
+    dailyToggle.addEventListener('click', () => {
+        document.getElementById('selectedDate').value = "";
+        tableBody.innerHTML = '';
+        dailyToggle.classList.add('active');
+        monthlyToggle.classList.remove('active');
+        dailyContainer.style.display = 'block';
+        monthlyContainer.style.display = 'none'; 
+        reportContainer.style.display = 'none';       
+    });
+
+    monthlyToggle.addEventListener('click', () => {
+        document.getElementById('selectedMonth').value = "";
+        tableBody.innerHTML = '';
+        monthlyToggle.classList.add('active');
+        dailyToggle.classList.remove('active');
+        monthlyContainer.style.display = 'block';
+        dailyContainer.style.display = 'none';
+        reportContainer.style.display = 'none';
+    });
+
+
 const dailyButton = document.getElementById('dailyBtn');
 const monthlyButton = document.getElementById('monthlyBtn');
 
@@ -15,8 +45,9 @@ monthlyButton.addEventListener('click', monthlyReports);
 
 async function dailyReports() {
 
-    const tableBody = document.getElementById('dailyExpenseTable');
+    const tableBody = document.getElementById('expenseTable');
     tableBody.innerHTML = '';
+    reportContainer.style.display = 'block';
 
     const date = document.getElementById('selectedDate').value;
     const dateSplit = date.split('-');
@@ -27,6 +58,7 @@ async function dailyReports() {
     const dateDetail = {
         date: formattedDate
     };
+    
     try {
         let totalExpenseAmount = 0;
         const token = localStorage.getItem('token');
@@ -38,7 +70,7 @@ async function dailyReports() {
         showTotalExpense(totalExpenseAmount);
 
         function showExpense(expense) {
-            const tableBody2 = document.getElementById('dailyExpenseTable');
+            const tableBody2 = document.getElementById('expenseTable');
             const newRow = document.createElement('tr');
 
             const dateCol = document.createElement('td');
@@ -66,7 +98,7 @@ async function dailyReports() {
         }
 
         function showTotalExpense(amount) {
-            const tableExpenseBody = document.getElementById('dailyExpenseTable');
+            const tableExpenseBody = document.getElementById('expenseTable');
             const totalRow = document.createElement('tr');
 
             const emptyCol = document.createElement('td');
@@ -88,7 +120,6 @@ async function dailyReports() {
         console.log(err);
         const errorMessage = err.response.data.error;
         if (errorMessage) {
-            window.location.href = '../html/index.html';
             alert(errorMessage);
         }
     }
@@ -96,11 +127,11 @@ async function dailyReports() {
 
 async function monthlyReports() {
 
-    const tableBody = document.getElementById('monthlyExpenseTable');
+    const tableBody = document.getElementById('expenseTable');
     tableBody.innerHTML = '';
+    reportContainer.style.display = 'block';
 
     const month = document.getElementById('selectedMonth').value;
-    console.log(month);
     const monthSplit = month.split('-');
     const monthNumber = monthSplit[1];
 
@@ -120,7 +151,7 @@ async function monthlyReports() {
         showTotalExpense(totalExpenseAmount);
 
         function showExpense(expense) {
-            const tableBody2 = document.getElementById('monthlyExpenseTable');
+            const tableBody2 = document.getElementById('expenseTable');
             const newRow = document.createElement('tr');
 
             const dateCol = document.createElement('td');
@@ -148,7 +179,7 @@ async function monthlyReports() {
         }
 
         function showTotalExpense(amount) {
-            const tableExpenseBody = document.getElementById('monthlyExpenseTable');
+            const tableExpenseBody = document.getElementById('expenseTable');
             const totalRow = document.createElement('tr');
 
             const emptyCol = document.createElement('td');

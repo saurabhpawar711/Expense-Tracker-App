@@ -21,16 +21,16 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active active-link" aria-current="page" href="../html/index.html">Home</a>
+            <a class="nav-link active active-link" href="../html/index.html">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" id="leaderboardLink">Leaderboard &#128081</a>
+            <a class="nav-link" href="#" id="leaderboardLink">Leaderboard 🏆</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" id="reportsLink">Reports &#128081</a>
+            <a class="nav-link" href="#" id="reportsLink">Reports 📊</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" id="downloadFile">Download &#128081</a>
+            <a class="nav-link" href="#" id="downloadFile">Download 📥</a>
           </li>
         </ul>
         <div class="premiumUser" id="premiumMember">
@@ -38,6 +38,9 @@
         </div>
         <div class="removePreButton">
           <button class="premiumBtn" id="rzp-btn" style="display: none">Buy premium &#128081</button>
+        </div>
+        <div class="logout">
+          <button class="logoutbtn btn btn-secondary mx-2" id="logoutBtn">Logout</button>
         </div>
       </div>
     </div>
@@ -48,23 +51,27 @@
       <div class="row">
         <div class="form-group col-md-3 my-2">
           <label for="exampleInputcategory" class="form-label">Category</label>
-          <select class="form-select wide-input" id="category" aria-label="Default select example" required>
-            <option selected> </option>
-            <option value="Grocery">Grocery</option>
-            <option value="Fastfood">Fast food</option>
-            <option value="Movie">Movie</option>
-            <option value="Travelling">Travelling</option>
-            <option value="Patrol">Patrol</option>
-            <option value="Other">Other</option>
+          <select class="select" id="category" aria-label="Default select example" required>
+            <option value="Choose category" selected>Choose category</option>
+            <option value="Food & Groceries">Food & Groceries</option>
+            <option value="Entertainment & Movies">Entertainment & Movies</option>
+            <option value="Fuel & Gasoline">Fuel & Gasoline</option>
+            <option value="Health & Wellness">Health & Wellness</option>
+            <option value="Clothing & Fashion">Clothing & Fashion</option>
+            <option value="Electronics & Gadgets">Electronics & Gadgets</option>
+            <option value="Utilities & Bills">Utilities & Bills</option>
+            <option value="Education & Books">Education & Books</option>
+            <option value="Hobbies & Leisure">Hobbies & Leisure</option>
+            <option value="Miscellaneous Expenses">Miscellaneous Expenses</option>
           </select>
         </div>
         <div class="form-group col-md-3 my-2">
           <label for="exampleInputamount" class="form-label">Amount</label>
-          <input type="number" class="form-control wide-input" id="amount" required />
+          <input type="number" class="control wide-input" id="amount" required />
         </div>
         <div class="form-group col-md-3 my-2">
           <label for="exampleInputdescription" class="form-label">Description</label>
-          <input type="text" class="form-control wide-input" id="description" required />
+          <input type="text" class="control wide-input" id="description" required />
         </div>
         <div class="form-group col-md-3 my-2">
           <div class="text-center">
@@ -90,6 +97,18 @@
       </tbody>
     </table>
   </div>
+  <div class="container-items">
+    <label for="itemsPerPage">Items Per Page :</label>
+    <select id="itemsPerPage" class="itemsPerPage">
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="15">15</option>
+      <option value="20">20</option>
+    </select>
+  </div>
+  <ul id="pagination" class="pagination">
+
+  </ul>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>

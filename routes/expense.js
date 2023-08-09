@@ -16,4 +16,6 @@ router.delete('/expense/delete-expenses/:id', authenticateRoute.authenticateUser
 
 router.get('/user/download', authenticateRoute.authenticateUser, isPremiumRoute.premiumStatus, expenseRoute.downloadExpense);
 
+router.post('/expense/getDetails/:page', authenticateRoute.authenticateUser, expenseRoute.getExpenseDetails);
+
 module.exports = router;

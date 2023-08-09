@@ -6,6 +6,6 @@ const leaderboardRoute = require('../controller/leaderboard');
 
 const authenticateRoute = require('../middleware/authenticate');
 
-router.get('/premium/show-leaderboard', authenticateRoute.authenticateUser, leaderboardRoute.showExpenses);
+router.get('/premium/show-leaderboard/:page', authenticateRoute.authenticateUser, leaderboardRoute.getLeaderboardDetails);
 
 module.exports = router;

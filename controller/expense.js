@@ -5,7 +5,6 @@ const S3Services = require('../services/S3service');
 
 exports.addExpense = async (req, res, next) => {
     const t = await sequelize.transaction();
-
     try {
         const date = req.body.date;
         const amount = req.body.amount;
@@ -70,3 +69,40 @@ exports.downloadExpense = async (req, res) => {
     }
 }
 
+exports.getExpenseDetails = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const limit = parseInt(req.body.expensePerPage, 10);
+        console.log(limit);
+        const page = req.params.page;
+        const offset = (page - 1) * limit;
+
+        const totalNoofExpense = await Expense.count({
+            where: { userId: userId }
+        });
+        const totalPage = Math.ceil(totalNoofExpense / limit);
+        const expense = await Expense.findAll({
+            where: { userId: userId },
+            offset: offset,
+            limit: limit
+        });
+        const currentPage = parseInt(page, 10); 
+        const nextPage = currentPage + 1;
+
+        const otherData = {
+            currentPage: page,
+            hasNextPage: limit * page < totalNoofExpense,
+            nextPage: nextPage,
+            hasPreviousPage: page > 1,
+            previousPage: page - 1,
+            lastPage: totalPage
+        };
+
+        res.status(201).json({ expense: expense, data: otherData });
+    }
+
+    catch (err) {
+        console.log(err);
+        res.status(500).json({error: err});
+    }
+}

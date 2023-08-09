@@ -79,3 +79,53 @@ h3 {
     align-items: center;
     text-align: center;
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.presentBtn {
+    padding: 5px 10px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #007bff;
+    color: aliceblue;
+    border-radius: 4px;
+}
+
+.previousBtn,
+.nextBtn {
+    padding: 5px 10px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #007bff;
+    color: aliceblue;
+    border-radius: 4px;
+}
+
+.firstBtn,
+.lastBtn {
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    color: black;
+}
+
+.presentBtn:hover,
+.previousBtn:hover,
+.nextBtn:hover {
+    background-color: #0a74ee;
+}
+
+.presentBtn.active {
+    background-color: #192650;
+    color: #fff;
+    margin: 5px;
+}
+
