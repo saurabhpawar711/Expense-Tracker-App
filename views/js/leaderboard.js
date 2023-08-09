@@ -1,3 +1,5 @@
+const backendApi = process.env.BACKEND_API;
+
 document.addEventListener("DOMContentLoaded", function () {
     const toggleBtn2 = document.querySelector(".navbar-toggler");
     const linksContainer2 = document.querySelector(".navbar-collapse");
@@ -13,7 +15,7 @@ async function getLeaderboardDetails() {
     try {
         const page = 1;
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:4000/premium/show-leaderboard/${page}`, { headers: { "Authorization": token } });
+        const response = await axios.get(`${backendApi}/premium/show-leaderboard/${page}`, { headers: { "Authorization": token } });
         for (let i = 0; i < response.data.users.length; i++) {
             showLeaderboard(response.data.users[i], currentPosition);
             currentPosition++;
@@ -80,7 +82,7 @@ async function goToPage(page) {
     tableBody.innerHTML = "";
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:4000/premium/show-leaderboard/${page}`, { headers: { "Authorization": token } });
+        const response = await axios.get(`${backendApi}/premium/show-leaderboard/${page}`, { headers: { "Authorization": token } });
         if (page > 1) {
             currentPosition = (page-1) * 10 + 1; 
         } else {

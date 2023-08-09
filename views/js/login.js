@@ -1,5 +1,6 @@
-const login = document.getElementById('form');
+const backendApi = process.env.BACKEND_API;
 
+const login = document.getElementById('form');
 login.addEventListener('submit', loginfunction);
 
 async function loginfunction(event) {
@@ -17,7 +18,7 @@ async function loginfunction(event) {
     document.getElementById('password').value = "";
 
     try {
-        const response = await axios.post('http://localhost:4000/user/login', userDetails);
+        const response = await axios.post(`${backendApi}/user/login`, userDetails);
         if (response.status === 202) {
             alert(response.data.message);
             localStorage.setItem('token', response.data.token);

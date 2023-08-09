@@ -1,3 +1,4 @@
+const backendApi = process.env.BACKEND_API;
 const Sib = require('sib-api-v3-sdk');
 const { v4: uuidv4 } = require('uuid');
 const User = require('../models/user');
@@ -36,7 +37,7 @@ exports.sendEmail = async (req, res, next) => {
             subject: 'reset your password',
             htmlContent: `<h3>Expense tracker reset password</h3>
             <h4>You can reset your password by clicking below</h4>
-            <a href="http://localhost:4000/password/checkRequest/${id}">Click here</a>`
+            <a href="${backendApi}/password/checkRequest/${id}">Click here</a>`
         })
         return res.status(200).json({ message: 'reset password link sent to your email' });
 
@@ -55,7 +56,7 @@ exports.checkRequest = async (req, res, next) => {
         const userId = isRequestActive.userId;
         if (isRequestActive) {
             await ResetPassword.update({ isActive: false }, { where: { id: uuid } });
-            res.redirect(`http://localhost:4000/resetPassword.html?uI=${userId}&u=${uuid}`);
+            res.redirect(`${backendApi}/resetPassword.html?uI=${userId}&u=${uuid}`);
         }
         else {
             throw new Error('Link expired');

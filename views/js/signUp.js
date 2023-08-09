@@ -1,5 +1,6 @@
-const signUp = document.getElementById('form');
+const backendApi = process.env.BACKEND_API;
 
+const signUp = document.getElementById('form');
 signUp.addEventListener('submit', signUpfunction);
 
 async function signUpfunction(event) {
@@ -21,14 +22,13 @@ async function signUpfunction(event) {
 
     try {
         const response = await axios
-            .post('http://localhost:4000/user/signup', userDetails);
+            .post(`${backendApi}/user/signup`, userDetails);
         if (response.status === 201) {
             alert('You have successfully created account');
             window.location.href = '../html/login.html';
         }
     }
     catch (err) {
-        console.log(err);
         if (err.response) {
             const errorMessage = err.response.data.error;
             const errorContainer = document.getElementById('error-container');

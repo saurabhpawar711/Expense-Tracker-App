@@ -1,3 +1,5 @@
+const backendApi = process.env.BACKEND_API;
+
 document.addEventListener("DOMContentLoaded", function () {
     const toggleBtn = document.querySelector(".navbar-toggler");
     const linksContainer = document.querySelector(".navbar-collapse");
@@ -62,7 +64,7 @@ async function dailyReports() {
     try {
         let totalExpenseAmount = 0;
         const token = localStorage.getItem('token');
-        const response = await axios.post('http://localhost:4000/reports/dailyReports', dateDetail, { headers: { "Authorization": token } });
+        const response = await axios.post(`${backendApi}/reports/dailyReports`, dateDetail, { headers: { "Authorization": token } });
         response.data.data.forEach((expense) => {
             showExpense(expense);
             totalExpenseAmount += expense.amount;
@@ -142,8 +144,7 @@ async function monthlyReports() {
     try {
         let totalExpenseAmount = 0;
         const token = localStorage.getItem('token');
-        const response = await axios.post('http://localhost:4000/reports/monthlyReports', monthDetail, { headers: { "Authorization": token } });
-        console.log(response);
+        const response = await axios.post(`${backendApi}/reports/monthlyReports`, monthDetail, { headers: { "Authorization": token } });
         response.data.data.forEach((expense) => {
             showExpense(expense);
             totalExpenseAmount += expense.amount;

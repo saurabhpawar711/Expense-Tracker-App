@@ -1,5 +1,5 @@
+const backendApi = process.env.BACKEND_API;
 const submitBtn = document.getElementById('submitBtn');
-
 submitBtn.addEventListener('click', sendMail);
 
 async function sendMail(event) {
@@ -13,7 +13,7 @@ async function sendMail(event) {
     document.getElementById('typeEmail').value = "";
 
     try {
-        const response = await axios.post('http://localhost:4000/password/forgotpassword', mailId);
+        const response = await axios.post(`${backendApi}/password/forgotpassword`, mailId);
         alert(response.data.message);
         window.location.href = "../html/login.html";
     }

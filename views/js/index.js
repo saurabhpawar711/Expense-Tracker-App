@@ -1,5 +1,5 @@
 
-
+const backendApi = process.env.BACKEND_API;
 window.addEventListener("DOMContentLoaded", function () {
     const toggleBtn = document.querySelector(".navbar-toggler");
     const linksContainer = document.querySelector(".navbar-collapse");
@@ -14,7 +14,7 @@ document.getElementById('downloadFile').addEventListener('click', downloadExpens
 async function downloadExpenseFile() {
     try {
         const token = localStorage.getItem('token');
-        const downloadRes = await axios.get('http://localhost:4000/user/download', { headers: { "Authorization": token } });
+        const downloadRes = await axios.get(`${backendApi}/user/download`, { headers: { "Authorization": token } });
         if (downloadRes.status === 200) {
             const a = document.createElement('a');
             a.href = downloadRes.data.fileUrl;
@@ -36,14 +36,14 @@ async function downloadExpenseFile() {
 
 document.getElementById('rzp-btn').addEventListener("click", async function () {
     const token = localStorage.getItem('token');
-    const response = await axios.get('http://localhost:4000/premium/buy-premium', { headers: { "Authorization": token } });
+    const response = await axios.get(`${backendApi}/premium/buy-premium`, { headers: { "Authorization": token } });
 
     var options = {
         "key": response.data.key_id,
         "order_id": response.data.order.id,
         "handler": async function (response) {
             try {
-                await axios.post('http://localhost:4000/premium/update-status', {
+                await axios.post(`${backendApi}/premium/update-status`, {
                     order_id: options.order_id,
                     payment_id: response.razorpay_payment_id,
                     status: "SUCCESSFUL"
@@ -63,13 +63,11 @@ document.getElementById('rzp-btn').addEventListener("click", async function () {
     }
 
     const rzp1 = new Razorpay(options);
-    console.log(rzp1);
     rzp1.open();
 
 
     rzp1.on('payment.failed', async function (response) {
-        console.log(response);
-        await axios.post('http://localhost:4000/premium/update-status', {
+        await axios.post(`${backendApi}/premium/update-status`, {
             order_id: options.order_id,
             status: "FAILED"
         }, { headers: { "Authorization": token } })
@@ -80,7 +78,7 @@ document.getElementById('rzp-btn').addEventListener("click", async function () {
 async function removePreBtn() {
     const token = localStorage.getItem('token');
     try {
-        const response = await axios.get('http://localhost:4000/premium/premium-status', { headers: { "Authorization": token } });
+        const response = await axios.get(`${backendApi}/premium/premium-status`, { headers: { "Authorization": token } });
         const isPremiumUser = response.data.premiumUser;
         const premiumBtn = document.getElementById('rzp-btn');
         const premiumUser = document.getElementById('premiumMember');
@@ -123,7 +121,7 @@ async function addExpense(event) {
 
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.post('http://localhost:4000/expense/add-expenses', details, { headers: { "Authorization": token } });
+        const response = await axios.post(`${backendApi}/expense/add-expenses`, details, { headers: { "Authorization": token } });
         const currentPage = parseInt(document.querySelector('.presentBtn').innerHTML);
         const lastPageBtn = document.querySelector('.lastBtn');
         const lastPage = parseInt(lastPageBtn.getAttribute('data-page'));
@@ -208,7 +206,7 @@ function showExpense(expense) {
         try {
             const token = localStorage.getItem('token');
             const delExpense = await axios
-                .delete(`http://localhost:4000/expense/delete-expenses/${id}`, { headers: { "Authorization": token } })
+                .delete(`${backendApi}/expense/delete-expenses/${id}`, { headers: { "Authorization": token } })
             removeExpenseFromScreen(delExpense);
         }
         catch (err) {
@@ -241,7 +239,7 @@ reports.addEventListener('click', checkPremiumforReports);
 async function checkPremiumforLeaderboard() {
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:4000/premium/check-premium', { headers: { "Authorization": token } });
+        const response = await axios.get(`${backendApi}/premium/check-premium`, { headers: { "Authorization": token } });
 
         if (response.data.isPremium === true) {
             window.location.href = '../html/leaderboard.html';
@@ -259,7 +257,7 @@ async function checkPremiumforLeaderboard() {
 async function checkPremiumforReports() {
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:4000/premium/check-premium', { headers: { "Authorization": token } });
+        const response = await axios.get(`${backendApi}/premium/check-premium`, { headers: { "Authorization": token } });
 
         if (response.data.isPremium === true) {
             window.location.href = '../html/reportsPage.html';
@@ -282,7 +280,6 @@ itemsPerPage.addEventListener('change', getExpenseDetails);
 async function getExpenseDetails() {
 
     const limit = itemsPerPage.value;
-    console.log(limit);
     localStorage.setItem('limitPerPage', limit);
     const limitPerPage = localStorage.getItem('limitPerPage');
     const expensePerPage = {
@@ -290,7 +287,7 @@ async function getExpenseDetails() {
     }
     const page = 1;
     const token = localStorage.getItem('token');
-    const response = await axios.post(`http://localhost:4000/expense/getDetails/${page}`, expensePerPage, { headers: { "Authorization": token } });
+    const response = await axios.post(`${backendApi}/expense/getDetails/${page}`, expensePerPage, { headers: { "Authorization": token } });
     clearExpenseList();
     for (let i = 0; i < response.data.expense.length; i++) {
         showExpense(response.data.expense[i]);
@@ -358,7 +355,7 @@ async function goToPage(page) {
     const expensePerPage = {
         expensePerPage: limitPerPage
     }
-    const response = await axios.post(`http://localhost:4000/expense/getDetails/${page}`, expensePerPage, { headers: { "Authorization": token } });
+    const response = await axios.post(`${backendApi}/expense/getDetails/${page}`, expensePerPage, { headers: { "Authorization": token } });
     for (let i = 0; i < response.data.expense.length; i++) {
         showExpense(response.data.expense[i]);
         pagination(response.data.data);
