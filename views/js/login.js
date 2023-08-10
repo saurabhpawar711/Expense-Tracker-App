@@ -1,5 +1,15 @@
 const backendApi = "http://localhost:4000";
 
+const password = document.getElementById("password");
+const showPwdCheck = document.getElementById('showPwd').addEventListener('click', showPassword);
+ function showPassword() {
+    if (password.type === "password") {
+        password.type = "text";
+      } else {
+        password.type = "password";
+      }
+ }
+
 const login = document.getElementById('form');
 login.addEventListener('submit', loginfunction);
 
