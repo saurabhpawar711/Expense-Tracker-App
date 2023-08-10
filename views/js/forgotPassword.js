@@ -1,4 +1,4 @@
-const backendApi = process.env.BACKEND_API;
+const backendApi = "http://localhost:4000";
 const submitBtn = document.getElementById('submitBtn');
 submitBtn.addEventListener('click', sendMail);
 

@@ -1,5 +1,5 @@
 
-const backendApi = process.env.BACKEND_API;
+const backendApi = "http://localhost:4000";
 window.addEventListener("DOMContentLoaded", function () {
     const toggleBtn = document.querySelector(".navbar-toggler");
     const linksContainer = document.querySelector(".navbar-collapse");

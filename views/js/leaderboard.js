@@ -1,4 +1,4 @@
-const backendApi = process.env.BACKEND_API;
+const backendApi = "http://localhost:4000";
 
 document.addEventListener("DOMContentLoaded", function () {
     const toggleBtn2 = document.querySelector(".navbar-toggler");
