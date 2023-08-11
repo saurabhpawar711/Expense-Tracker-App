@@ -10,7 +10,7 @@ const fs = require('fs');
 
 require('dotenv').config();
 
-// app.use(express.static(path.join(__dirname, 'views')));
+app.use(express.static(path.join(__dirname, 'views')));
 
 const sequelize = require('./util/database');
 const User = require('./models/user');

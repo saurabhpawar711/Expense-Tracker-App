@@ -1,14 +1,14 @@
-const backendApi = "https://16.170.212.225:4000";
+const backendApi = "http://16.170.212.225:4000";
 
 const password = document.getElementById("password");
 const showPwdCheck = document.getElementById('showPwd').addEventListener('click', showPassword);
- function showPassword() {
+function showPassword() {
     if (password.type === "password") {
         password.type = "text";
-      } else {
+    } else {
         password.type = "password";
-      }
- }
+    }
+}
 
 const login = document.getElementById('form');
 login.addEventListener('submit', loginfunction);
@@ -37,15 +37,9 @@ async function loginfunction(event) {
     }
     catch (err) {
         console.log(err);
-        if (err.response && err.response.data) {
-            const errorMessage = err.response.data.error;
-            const errorContainer = document.getElementById('error-container');
-            errorContainer.innerHTML = `<h4>${errorMessage}</h4>`;
-        } else {
-            // Handle other types of errors
-            const errorContainer = document.getElementById('error-container');
-            errorContainer.innerHTML = "<h4>An error occurred. Please try again later.</h4>";
-        }
+        const errorMessage = err.response.data.error;
+        const errorContainer = document.getElementById('error-container');
+        errorContainer.innerHTML = `<h4>${errorMessage}</h4>`;
     }
 }
 
