@@ -10,7 +10,7 @@ const fs = require('fs');
 
 require('dotenv').config();
 
-app.use(express.static(path.join(__dirname, 'views', 'html')));
+// app.use(express.static(path.join(__dirname, 'views')));
 
 const sequelize = require('./util/database');
 const User = require('./models/user');
@@ -20,7 +20,7 @@ const ResetPassword = require('./models/resetPasswordModel');
 const bodyParser = require('body-parser');
 
 app.use(cors());
-app.use(helmet());
+// app.use(helmet());
 app.use(compression());
 
 const accessLogStream = fs.createWriteStream(
@@ -46,6 +46,11 @@ app.use(leaderboardRoute);
 app.use(passwordRoute);
 app.use(reportsRoute);
 app.use(isPremium);
+
+app.use((req, res) => {
+    console.log(req.url);
+    res.sendFile(path.join(__dirname, 'views',`${req.url}`))
+})
 
 User.hasMany(Expenses);
 Expenses.belongsTo(User);
