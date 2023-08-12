@@ -36,8 +36,8 @@
         <div class="premiumUser" id="premiumMember">
           Premium member &#128081
         </div>
-        <div class="removePreButton">
-          <button class="premiumBtn" id="rzp-btn" style="display: none">Buy premium &#128081</button>
+        <div class="buyPreButton">
+          <button class="premiumBtn btn btn-secondary" id="rzp-btn" style="display: none">Buy premium &#128081</button>
         </div>
         <div class="logout">
           <button class="logoutbtn btn btn-secondary mx-2" id="logoutBtn">Logout</button>
@@ -82,21 +82,24 @@
     </form>
   </div>
   <div class="container table-container">
-    <table class="table table-hover">
-      <thead>
-        <tr class="table-heading">
-          <th scope="col">Date</th>
-          <th scope="col">Category</th>
-          <th scope="col">Amount</th>
-          <th scope="col">Description</th>
-          <th scope="col"> </th>
-        </tr>
-      </thead>
-      <tbody id="tableList">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr class="table-heading">
+            <th scope="col" style="width: 18%;">Date</th>
+            <th scope="col" style="width: 20%;">Category</th>
+            <th scope="col" style="width: 18%;">Amount</th>
+            <th scope="col" style="width: 20%;">Description</th>
+            <th scope="col" style="width: 15%;"> </th>
+          </tr>
+        </thead>
+        <tbody id="tableList">
 
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   </div>
+
   <div class="container-items">
     <label for="itemsPerPage">Items Per Page :</label>
     <select id="itemsPerPage" class="itemsPerPage">

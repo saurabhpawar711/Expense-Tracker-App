@@ -137,6 +137,10 @@ select option {
     padding: 4px;
 }
 
+.table-responsive {
+    width: 100%;
+}
+
 .table-container {
     margin-top: 20px;
 }
@@ -169,9 +173,9 @@ select option {
 .premiumBtn {
     background: #e7910e;
     color: white;
+    /* margin-left: 120px; */
+    padding-bottom: 5px;
     border-radius: 7px;
-    float: right;
-    padding: 5px;
     cursor: pointer;
 }
 
@@ -268,9 +272,7 @@ select option {
         text-align: left;
         padding-top: 5px;
     }
-}
 
-@media (max-width: 991px) {
     .navbar-collapse.show {
         top: 0;
         left: 0;
@@ -285,14 +287,8 @@ select option {
         display: inline-block;
     }
 
-    .navbar-nav .nav-item {
-        margin: 0 0.5rem;
-    }
-
-    .premiumUser,
-    .removePreButton,
-    .logout {
-        display: block;
-        margin-top: 1rem;
+    .premiumBtn {
+        margin-left: 120px;
+        margin-bottom: 10px;
     }
 }

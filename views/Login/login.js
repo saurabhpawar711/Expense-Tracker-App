@@ -1,4 +1,4 @@
-const backendApi = "http://16.170.212.225:4000";
+const backendApi = "http://16.170.78.233:4000";
 
 const password = document.getElementById("password");
 const showPwdCheck = document.getElementById('showPwd').addEventListener('click', showPassword);

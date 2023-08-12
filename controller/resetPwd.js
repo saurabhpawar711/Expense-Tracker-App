@@ -12,6 +12,9 @@ exports.sendEmail = async (req, res, next) => {
         const id = uuidv4();
 
         const findEmail = await User.findOne({ where: { email: email } });
+        if (!findEmail) {
+            throw new Error("Enter registered email");
+        }
 
         await ResetPassword.create({ id: id, isActive: true, userId: findEmail.id });
 
@@ -43,8 +46,13 @@ exports.sendEmail = async (req, res, next) => {
 
     }
     catch (err) {
-        console.log(err)
-        res.status(500).json({ message: 'Error while sending email' });
+        if(err.message === "Enter registered email") {
+            res.status(500).json({ error: err.message });
+        }
+        else {
+            console.log(err);
+            res.status(500).json({ message: 'Error while sending email' });
+        }   
     }
 }
 

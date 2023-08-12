@@ -69,28 +69,16 @@ input[type='password'] {
     text-decoration: none;
     color: rgb(4, 108, 235);
 }
-@media (max-width: 992px) {
-    .container {
-        padding: 10px;
-        margin: 10px;
-    }
-}
+
 
 @media (max-width: 576px) {
     .container {
         width: 100%;
-        padding: 10px;
     }
 }
 
-@media (max-width: 320px) {
-    .container {
-        width: 100%;
-        padding: 10px;
-    }
-}
 
-@media (max-width: 992px) {
+@media (max-width: 772px) {
     .container-title img {
         display: none;
     }

@@ -1,5 +1,5 @@
 
-const backendApi = "http://16.170.212.225:4000";
+const backendApi = "http://16.170.78.233:4000";
 window.addEventListener("DOMContentLoaded", function () {
     const toggleBtn = document.querySelector(".navbar-toggler");
     const linksContainer = document.querySelector(".navbar-collapse");

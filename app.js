@@ -20,7 +20,7 @@ const ResetPassword = require('./models/resetPasswordModel');
 const bodyParser = require('body-parser');
 
 app.use(cors());
-// app.use(helmet());
+app.use(helmet());
 app.use(compression());
 
 const accessLogStream = fs.createWriteStream(

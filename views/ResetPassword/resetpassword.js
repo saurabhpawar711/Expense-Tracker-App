@@ -16,7 +16,7 @@ async function changePassword(event) {
 
     document.getElementById('typePassword').value = "";
     try {
-        const response = await axios.post(`http://16.170.212.225:4000/password/updatepassword/${userId}`, newPassword);
+        const response = await axios.post(`http://16.170.78.233:4000/password/updatepassword/${userId}`, newPassword);
         if (response.data.message === 'Yor have successfully changed your password') {
             window.location.href = '../Login/login.html'
         }
