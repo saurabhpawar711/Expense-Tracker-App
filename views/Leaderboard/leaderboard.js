@@ -1,11 +1,12 @@
 const backendApi = "http://16.170.78.233:4000";
 
-document.addEventListener("DOMContentLoaded", function () {
-    const toggleBtn2 = document.querySelector(".navbar-toggler");
-    const linksContainer2 = document.querySelector(".navbar-collapse");
 
-    toggleBtn2.addEventListener("click", function () {
-        linksContainer2.classList.toggle("show");
+window.addEventListener("DOMContentLoaded", function () {
+    const toggleBtn = document.querySelector(".navbar-toggler");
+    const linksContainer = document.querySelector(".navbar-collapse");
+
+    toggleBtn.addEventListener("click", function () {
+        linksContainer.classList.toggle("show");
     });
 });
 

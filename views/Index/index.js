@@ -122,11 +122,14 @@ async function addExpense(event) {
     try {
         const token = localStorage.getItem('token');
         const response = await axios.post(`${backendApi}/expense/add-expenses`, details, { headers: { "Authorization": token } });
+        const tableBody = document.getElementById('tableList');
+        const expenseOnPage = tableBody.querySelectorAll('tr').length;
+        if(expenseOnPage === 0) {
+            window.location.reload();
+        }
         const currentPage = parseInt(document.querySelector('.presentBtn').innerHTML);
         const lastPageBtn = document.querySelector('.lastBtn');
         const lastPage = parseInt(lastPageBtn.getAttribute('data-page'));
-        const tableBody = document.getElementById('tableList');
-        const expenseOnPage = tableBody.querySelectorAll('tr').length;
         const hasPreviousPage = currentPage > 1;
 
         const data = {
@@ -301,7 +304,7 @@ async function getExpenseDetails() {
 
 async function pagination(data) {
 
-    const currentPage = data.currentPage;
+    const currentPage = data.currentPage || 1;
     const hasPreviousPage = data.hasPreviousPage;
     const nextPage = data.nextPage;
     const hasNextPage = data.hasNextPage;

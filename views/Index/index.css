@@ -18,12 +18,12 @@ nav {
 
 .navbar-brand {
     font-weight: bolder;
-    color: aliceblue;
+    color: rgb(255, 255, 255);
 }
 
 .navbar-nav .nav-item .active-link,
 .navbar-nav .nav-item .active-link:hover {
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 .nav-link:hover {
@@ -33,18 +33,6 @@ nav {
 
 .navbar-brand:hover {
     color: rgb(255, 255, 255);
-}
-
-.navbar-collapse.show .navbar-nav {
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-}
-
-.navbar-collapse .navbar-nav {
-    margin: 0;
-    display: flex;
-    justify-content: flex-start;
 }
 
 .container {
@@ -67,7 +55,6 @@ nav {
 
 
 .table-heading {
-    /* background: #192650; */
     color: rgb(0, 0, 0);
 }
 
@@ -173,7 +160,6 @@ select option {
 .premiumBtn {
     background: #e7910e;
     color: white;
-    /* margin-left: 120px; */
     padding-bottom: 5px;
     border-radius: 7px;
     cursor: pointer;
@@ -259,7 +245,7 @@ select option {
 }
 
 
-@media (max-width: 576px) {
+@media (max-width: 992px) {
     .container {
         padding: 10px;
     }
@@ -288,7 +274,7 @@ select option {
     }
 
     .premiumBtn {
-        margin-left: 120px;
+        margin-left: 100px;
         margin-bottom: 10px;
     }
 }

@@ -29,17 +29,6 @@ nav {
     color: rgb(255, 255, 255);
 }
 
-.navbar-collapse.show .navbar-nav {
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-}
-
-.navbar-collapse .navbar-nav {
-    margin: 0;
-    display: flex;
-    justify-content: flex-start;
-}
 
 .outer-container {
     background-color: #ffffff;
@@ -104,3 +93,20 @@ td {
     color: #fff;
   }
   
+  @media (max-width: 992px) {
+
+    .navbar-collapse.show {
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: #192650;
+        text-align: center;
+        padding: 1rem 0;
+        z-index: 9999;
+    }
+
+    .navbar-nav {
+        display: inline-block;
+    }
+
+}
